@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +15,11 @@ import javax.swing.SpinnerNumberModel;
 public class Vis extends JPanel {
 
     private String textToDisplay;
-    private Map<String, Double> data;
-    private Map<String, Double> relativeData;
+//    private Map<String, Double> data;
+//    private Map<String, Double> relativeData;
+    private ArrayList<Double> data;
+    private ArrayList<Double> relativeData;
+    
     double max_num;
     boolean isBar = true;
 
@@ -23,8 +27,8 @@ public class Vis extends JPanel {
     public Vis() {
         super();
         textToDisplay = "There's nothing to see here.";
-        relativeData = new HashMap<>();
-        data = new HashMap<>();
+        relativeData = new ArrayList<>();
+        data = new ArrayList<>();
         
     }
 
@@ -33,23 +37,23 @@ public class Vis extends JPanel {
         repaint();
     }
 
-	public void setData(Map<String, Double> inData) {
-		// TODO Auto-generated method stub
-        data = inData;
-        var allValues = data.values();
-        double max=0;
-        max_num=0;
-        for (var currObj : allValues) {
-            if (currObj > max) {
-                max = currObj;
-                max_num=currObj;
-            }
-        }
-        for (var key : data.keySet()) {
-            relativeData.put(key, data.get(key) / max);
-        }
-        repaint();	
-	}
+//	public void setData(Map<String, Double> inData) {
+//		// TODO Auto-generated method stub
+//        data = inData;
+//        var allValues = data.values();
+//        double max=0;
+//        max_num=0;
+//        for (var currObj : allValues) {
+//            if (currObj > max) {
+//                max = currObj;
+//                max_num=currObj;
+//            }
+//        }
+//        for (var key : data.keySet()) {
+//            relativeData.put(key, data.get(key) / max);
+//        }
+//        repaint();	
+//	}
 	
 	public void clearMap() {
 //		System.out.println("clearMap ran");
@@ -60,6 +64,12 @@ public class Vis extends JPanel {
 		
 
 
+	}
+	
+	public void setData(ArrayList<Double> arr) {
+		// this is where you set all the data and instantiate the bar objects
+		
+		
 	}
     @Override
     public void paintComponent(Graphics g1) {
@@ -138,6 +148,7 @@ public class Vis extends JPanel {
             // this is for the yAxis
             
             if(isBar) {
+            	// this is where you should draw the bars
                 g.fillRect(x, y, (int)barWidth,(int)barHeight);
 
             }else {

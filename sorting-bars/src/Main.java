@@ -1,6 +1,8 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.*;
 import java.util.HashMap;
@@ -14,6 +16,8 @@ import javax.swing.JMenuItem;
 public class Main extends JFrame {
 
     private Vis mainPanel;
+    String filename = "test1.txt";
+    ArrayList<Double> nums;
 
     public Main() {
 
@@ -27,6 +31,35 @@ public class Main extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Seth's Data Visualization");
         setVisible(true);
+        getData(filename);
+    }
+    
+    private void getData(String fname) {
+    	try{
+
+            File f = new File(fname);
+            Scanner s = new Scanner(f);
+            nums = new ArrayList<>();
+            if(!nums.isEmpty()) {
+            	nums.clear();
+            }
+            while(s.hasNextLine()){
+                double number = s.nextDouble();
+                nums.add(number);
+            }   
+            s.close();
+            int numsSize = nums.size();
+//            for (var t: nums) {
+//            	say(t);
+//            }
+    	}catch(FileNotFoundException fe){
+            say("error is :" +fe);
+        }
+
+    		
+    }
+    public static void say(Object o){
+        System.out.println(o);
     }
 
     //select count(*) from derbyDB
@@ -77,14 +110,14 @@ public class Main extends JFrame {
     private JMenuBar setupMenu() {
         //instantiate menubar, menus, and menu options
         JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu("File");
-        JMenuItem item1 = new JMenuItem("Item 1");
-        JMenuItem item2 = new JMenuItem("# Students per Major");
-        JMenuItem item3 = new JMenuItem("# Students per area");
-        JMenuItem item4 = new JMenuItem("AVG GPA per Major");
-        JMenuItem item5 = new JMenuItem("AVG credits per year");
-        JMenuItem item6 = new JMenuItem("# Students per GPA (not working yet)");
-        JMenuItem item7 = new JMenuItem("Your choice");
+        JMenu fileMenu = new JMenu("Sorting Algorithms");
+        JMenuItem item1 = new JMenuItem("Bubble Sort");
+        JMenuItem item2 = new JMenuItem("Heap Sort");
+        JMenuItem item3 = new JMenuItem("Quick Sort");
+        JMenuItem item4 = new JMenuItem("Sort");
+        JMenuItem item5 = new JMenuItem("Sort");
+        JMenuItem item6 = new JMenuItem("Sort");
+        JMenuItem item7 = new JMenuItem("Sort");
         
         JMenu chartMenu = new JMenu("Chart Type");
         JMenuItem bar = new JMenuItem("Bar Chart");
@@ -100,9 +133,11 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Just clicked menu item 1");
-                int gilmo = runSimpleCountQuery("SELECT COUNT(*) FROM cis2019");
-                System.out.println("I found " + gilmo + " rows in the table.");
-                mainPanel.setText("I found " + gilmo + " rows in the table.");
+                System.out.println("Just clicked menu item 2");
+            	mainPanel.clearMap();
+            	
+            	
+
             }
         });
         
@@ -112,14 +147,9 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Just clicked menu item 2");
             	mainPanel.clearMap();
-                var sqlData = performTwoColumnQuery("select count(*), major from cis2019 group by major");
-//                for (var k : sqlData.keySet()) {
-//                    double num = sqlData.get(k);
-//                    System.out.println(k + " : " + num);
-//
-//                }
+
                 
-                mainPanel.setData(sqlData);
+//                mainPanel.setData(sqlData);
 
             }
         });
@@ -130,8 +160,7 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	mainPanel.clearMap();
                 System.out.println("Just clicked menu item 3");
-                var sqlData = performTwoColumnQuery("select count(*), home from cis2019 group by home");
-                mainPanel.setData(sqlData);
+//                mainPanel.setData(sqlData);
             }
         });
         
@@ -142,13 +171,8 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	mainPanel.clearMap();
                 System.out.println("*******************Just clicked menu item 4***************");
-                var sqlData = performTwoColumnQuery("select avg(gpa), major from cis2019 group by major");
-                mainPanel.setData(sqlData);
-                for (var k : sqlData.keySet()) {
-                  double num = sqlData.get(k);
-                  System.out.println(k + " : " + num);
+//                mainPanel.setData(sqlData);
 
-              }
 
             }
         });
@@ -160,8 +184,7 @@ public class Main extends JFrame {
             	mainPanel.clearMap();
 
                 System.out.println("Just clicked menu item 5");
-                var sqlData = performTwoColumnQuery("select avg(credits_attempted), gradyear from cis2019 group by gradyear");
-                mainPanel.setData(sqlData);
+//                mainPanel.setData(sqlData);
 
             }
         });
@@ -175,7 +198,7 @@ public class Main extends JFrame {
 
                 System.out.println("Just clicked menu item 6");
                 var sqlData = performTwoColumnQuery("select count(*), gpa_bins from cis2019 group by gpa_bins");
-                mainPanel.setData(sqlData);
+//                mainPanel.setData(sqlData);
 
             }
         });
@@ -189,7 +212,7 @@ public class Main extends JFrame {
 
                 System.out.println("Just clicked menu item 7");
                 var sqlData = performTwoColumnQuery("select avg(credits_attempted), home from cis2019 group by home");
-                mainPanel.setData(sqlData);
+//                mainPanel.setData(sqlData);
 
             }
         });
