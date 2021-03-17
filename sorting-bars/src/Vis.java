@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,24 +40,6 @@ public class Vis extends JPanel {
         repaint();
     }
 
-//	public void setData(Map<String, Double> inData) {
-//		// TODO Auto-generated method stub
-//        data = inData;
-//        var allValues = data.values();
-//        double max=0;
-//        max_num=0;
-//        for (var currObj : allValues) {
-//            if (currObj > max) {
-//                max = currObj;
-//                max_num=currObj;
-//            }
-//        }
-//        for (var key : data.keySet()) {
-//            relativeData.put(key, data.get(key) / max);
-//        }
-//        repaint();	
-//	}
-	
 	public void clearMap() {
 //		System.out.println("clearMap ran");
 //		System.out.println("data.clear() is  "+ relativeData.isEmpty());
@@ -110,20 +93,10 @@ public class Vis extends JPanel {
         //draw blank background
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
-
         //render visualization
         g.setColor(Color.BLACK);
-//        g.drawString(textToDisplay, 10, 20);
-        
-//        BarChart bc = new BarChart();
-//        bc.draw(g1, w, h);
-         
-
-        
         // how many bars/data we need to draw
         howManyBars = relativeData.size();
-
-        
 //        System.out.println("The number of bars is "+ howManyBars);
         
         // calculates the spacing
@@ -131,7 +104,7 @@ public class Vis extends JPanel {
 
         
         int i = 0;
-        Main.say(Bars.isEmpty());
+//        Main.say(Bars.isEmpty());
         for(var bar :Bars) {
         	barWidth= (w/howManyBars)/2;
         	ratio = relativeData.get(i);
@@ -155,63 +128,39 @@ public class Vis extends JPanel {
             	largestHeight = y;
             }
             bar.draw(g,x, y, barHeight,barWidth);
+            Main.say("drawing "+i);
             x+=barWidth+5;
 //            x+=barWidthhowManyBars;
         	i++;
         }
-        // renders the bar 
-//        for (var jerico : relativeData.keySet()) {
-////           double barHeight = getWidth() * relativeData.get(jerico);
-//       	
-//        	barWidth= (w/howManyBars)/2;
-//        	ratio = relativeData.get(jerico);
-//        	barHeight = (int)(h*ratio*.90);
-//        	System.out.println("relativeData.get is "+relativeData.get(jerico));
-//        	System.out.println("The barHeight is "+ barHeight);
-//            String s = jerico;
-//            g.setColor(Color.black);
-//            yLabel = (int)(h*.98);
-//            g.drawString(s, x+15, yLabel);
-//            
-//            // draw the vertical line on the left
-//            xLine =(int)(w*.05);
-//            yLine =(int)(h*.96);
-//            
-//            // vertical line;
-//            g.drawLine(xLine, 0, xLine, yLine);
-//            //horizontal line; 
-//            g.drawLine(xLine,yLine,w,yLine);
-//
-//            g.setColor(Color.BLUE);
-//            
-//            // Draw the bars
-//            y =(int) ((h*.95)-barHeight);
-//            System.out.println("the y pos is "+ y);
-//            if(ratio ==1) {
-//            	largestHeight = y;
-//            }
-//
-//            // this is for the yAxis
-//
-//            	// this is where you should draw the bars
-//            g.fillRect(x, y, (int)barWidth,(int)barHeight);
-//
-//           
-//            
-//           x+=barWidth+10;
-//           i++;
-//
-//        
-//        
-//        if(!isBar) {
-//        	g.drawPolyline(poly_X, poly_Y, howManyBars);
-//        }
-//        
-//        System.out.println("*******************End *******************");
-//
-//       
-//   
-//      }
+
+    }
+    
+    public void bubbleSort() {
+    	int arrayLength = Bars.size();
+    	for(int i = 0; i<= arrayLength-2; i++){
+            for(int j = arrayLength-1; j>=i+1; j--){
+                int a = Bars.get(j).getValue();
+                int b = Bars.get(j-1).getValue();
+                if(a<b){
+                	Bar tempBar = Bars.get(j);
+                	double relRatio = relativeData.get(j);
+                	relativeData.set(j, relativeData.get(j-1));
+                	relativeData.set(j-1, relRatio);
+
+                	Bars.set(j, Bars.get(j-1));
+                	Bars.set(j-1, tempBar);
+//                    Collections.swap(Bars, j-1, j);
+                    
+                    Main.say("switches");
+                    repaint();
+                }
+            }
+        }
+    	Main.say("This is after bubble sort");
+    	for(var bar: Bars) {
+    		Main.say(bar.getValue());
+    	}
     }
         
 

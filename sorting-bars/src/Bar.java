@@ -32,4 +32,7 @@ public class Bar {
 	public String getLabel() {
 		return label;
 	}
+	public int getValue() {
+		return (int)val;
+	}
 }

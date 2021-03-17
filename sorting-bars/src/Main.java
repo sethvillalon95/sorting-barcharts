@@ -64,26 +64,7 @@ public class Main extends JFrame {
     }
 
     //select count(*) from derbyDB
-    private int runSimpleCountQuery(String q) {
-        try {
-            Connection c = DriverManager.getConnection("jdbc:derby:sethFinal");
-            Statement s = c.createStatement();
-            ResultSet rs = s.executeQuery(q);
-            rs.next();
-            int count = rs.getInt(1);
-            return count;
-        } catch (SQLException e) {
-            System.out.println("could not connect to Derby!");
-            System.out.println("could not connect to Derby!");
-            System.out.println(e);
-            System.err.println("  Error Code: " + e.getErrorCode());
-            System.err.println("  Message:    " + e.getMessage());
-            System.err.println("  Message:    " + e.getNextException());
 
-            
-            return 0;
-        }
-    }
 
     private Map<String, Double> performTwoColumnQuery(String q) {
         Map<String, Double> results = new HashMap<>();
@@ -112,8 +93,8 @@ public class Main extends JFrame {
         //instantiate menubar, menus, and menu options
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Sorting Algorithms");
-        JMenuItem item1 = new JMenuItem("Bubble Sort");
-        JMenuItem item2 = new JMenuItem("Heap Sort");
+        JMenuItem item1 = new JMenuItem("Heap Sort");
+        JMenuItem item2 = new JMenuItem("Bubble Sort");
         JMenuItem item3 = new JMenuItem("Quick Sort");
         JMenuItem item4 = new JMenuItem("Sort");
         JMenuItem item5 = new JMenuItem("Sort");
@@ -142,12 +123,16 @@ public class Main extends JFrame {
             }
         });
         
-        //# Students per Major
+        //Bubble sort
         item2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Just clicked menu item 2");
-            	mainPanel.clearMap();
+//            	mainPanel.clearMap();
+//            	getData(filename);
+//            	mainPanel.setData(nums);
+//            	new Timer(1000).start();
+            	mainPanel.bubbleSort();
 
                 
 //                mainPanel.setData(sqlData);
@@ -198,7 +183,6 @@ public class Main extends JFrame {
             	mainPanel.clearMap();
 
                 System.out.println("Just clicked menu item 6");
-                var sqlData = performTwoColumnQuery("select count(*), gpa_bins from cis2019 group by gpa_bins");
 //                mainPanel.setData(sqlData);
 
             }
@@ -212,7 +196,6 @@ public class Main extends JFrame {
             	mainPanel.clearMap();
 
                 System.out.println("Just clicked menu item 7");
-                var sqlData = performTwoColumnQuery("select avg(credits_attempted), home from cis2019 group by home");
 //                mainPanel.setData(sqlData);
 
             }
