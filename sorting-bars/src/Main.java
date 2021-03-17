@@ -32,6 +32,7 @@ public class Main extends JFrame {
         setTitle("Seth's Data Visualization");
         setVisible(true);
         getData(filename);
+        mainPanel.setData(nums);
     }
     
     private void getData(String fname) {
