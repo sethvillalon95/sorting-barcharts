@@ -19,6 +19,7 @@ public class Vis extends JPanel {
 //    private Map<String, Double> relativeData;
     private ArrayList<Double> data;
     private ArrayList<Double> relativeData;
+    private ArrayList<Bar> Bars;
     
     double max_num;
     boolean isBar = true;
@@ -29,6 +30,7 @@ public class Vis extends JPanel {
         textToDisplay = "There's nothing to see here.";
         relativeData = new ArrayList<>();
         data = new ArrayList<>();
+        Bars = new ArrayList<>();
         
     }
 
@@ -78,55 +80,86 @@ public class Vis extends JPanel {
 		}
 		// this is to get the relative data
 		for(var v: arr) {
-			relativeData.add(v/max_num);
+			double temp = (v/max_num);
+			relativeData.add(temp);
+			Bars.add(new Bar(v));
+			
 //			Main.say(v/max_num);
 		}
 		
+		repaint();
+		
 		
 	}
-//    @Override
-//    public void paintComponent(Graphics g1) {
-//        Graphics2D g = (Graphics2D)g1;
-//        int h= getHeight();
-//        int w = getWidth();
-//        int x=0, y =0;
-//        int howManyBars;
-//    	double barWidth;
-//    	double ratio;
-//    	double barHeight;
-//        int yLabel;
-//        int xLine;
-//        int yLine=0;
-//        int largestHeight =0;
-//        
-//
-//        //draw blank background
-//        g.setColor(Color.WHITE);
-//        g.fillRect(0, 0, getWidth(), getHeight());
-//
-//        //render visualization
-//        g.setColor(Color.BLACK);
-////        g.drawString(textToDisplay, 10, 20);
-//        
-////        BarChart bc = new BarChart();
-////        bc.draw(g1, w, h);
-//        
-//
-//        
-//        // how many bars/data we need to draw
-//        howManyBars = relativeData.keySet().size();
-//        int poly_X[] = new int[howManyBars];
-//        int poly_Y[] = new int[howManyBars];
-//
-//        
-////        System.out.println("The number of bars is "+ howManyBars);
-//        
-//        // calculates the spacing
-//        x = (int)(w*.1);
-//
-//        
-//        int i = 0;
-//        // renders the bar 
+    @Override
+    public void paintComponent(Graphics g1) {
+        Graphics2D g = (Graphics2D)g1;
+        int h= getHeight();
+        int w = getWidth();
+        int x=0, y =0;
+        int howManyBars;
+    	double barWidth;
+    	double ratio;
+    	double barHeight;
+        int yLabel;
+        int xLine;
+        int yLine=0;
+        int largestHeight =0;
+        
+
+        //draw blank background
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, getWidth(), getHeight());
+
+        //render visualization
+        g.setColor(Color.BLACK);
+//        g.drawString(textToDisplay, 10, 20);
+        
+//        BarChart bc = new BarChart();
+//        bc.draw(g1, w, h);
+         
+
+        
+        // how many bars/data we need to draw
+        howManyBars = relativeData.size();
+
+        
+//        System.out.println("The number of bars is "+ howManyBars);
+        
+        // calculates the spacing
+        x = (int)(w*.09);
+
+        
+        int i = 0;
+        Main.say(Bars.isEmpty());
+        for(var bar :Bars) {
+        	barWidth= (w/howManyBars)/2;
+        	ratio = relativeData.get(i);
+        	barHeight = (int)(h*ratio*.90);
+        	String barLabel = bar.getLabel();
+            g.setColor(Color.black);
+            yLabel = (int)(h*.98);
+            g.drawString(barLabel, x+5, yLabel);
+            xLine =(int)(w*.05);
+            yLine =(int)(h*.96);
+            
+            // vertical line;
+            g.drawLine(xLine, 0, xLine, yLine);
+            //horizontal line; 
+            g.drawLine(xLine,yLine,w,yLine);
+            
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< need to change color later >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>            
+            g.setColor(Color.BLUE);
+            y =(int) ((h*.95)-barHeight);
+            if(ratio ==1) {
+            	largestHeight = y;
+            }
+            bar.draw(g,x, y, barHeight,barWidth);
+            x+=barWidth+5;
+//            x+=barWidthhowManyBars;
+        	i++;
+        }
+        // renders the bar 
 //        for (var jerico : relativeData.keySet()) {
 ////           double barHeight = getWidth() * relativeData.get(jerico);
 //       	
@@ -159,17 +192,10 @@ public class Vis extends JPanel {
 //            }
 //
 //            // this is for the yAxis
-//            
-//            if(isBar) {
-//            	// this is where you should draw the bars
-//                g.fillRect(x, y, (int)barWidth,(int)barHeight);
 //
-//            }else {
-//            	g.fillOval(x-10, y-10, 20, 20);
-//            }
-//            // start collecting the poly_X and poly_Y values;
-//            poly_X[i] = x;
-//            poly_Y[i] = y;
+//            	// this is where you should draw the bars
+//            g.fillRect(x, y, (int)barWidth,(int)barHeight);
+//
 //           
 //            
 //           x+=barWidth+10;
@@ -186,7 +212,7 @@ public class Vis extends JPanel {
 //       
 //   
 //      }
-//    }
+    }
         
 
 
