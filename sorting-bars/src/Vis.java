@@ -25,6 +25,7 @@ public class Vis extends JPanel {
     double max_num;
     boolean isBar = true;
 	private boolean debugger = false;
+	int time = 100;
 
 
     public Vis() {
@@ -173,7 +174,7 @@ public class Vis extends JPanel {
 	                    Main.say("switches after repaint");
 	                    debug(); 
 	                    
-						Thread.sleep(1000);
+						Thread.sleep(time);
 
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -189,6 +190,45 @@ public class Vis extends JPanel {
 //    	for(var bar: Bars) {
 //    		Main.say(bar.getValue());
 //    	}
+    }
+    
+    public void insertionSort() {
+    	int arrayLength = Bars.size();
+    	Main.say("The size of the Bars is "+ arrayLength);
+    	for(int j = 1; j<arrayLength; j++) {
+//        	Main.say("The size of the Bars is "+ arrayLength+" at j "+j+ " the data at index 11 is "+ relativeData.get(11)+"before while loop");
+
+    		Bar tempBar = Bars.get(j);
+    		double tempVal = tempBar.getValue();
+    		double tempRelData = relativeData.get(j);
+    		
+    		int index = j-1;
+
+    		while(index>=0 &&((Bars.get(index).getValue()) > tempVal)&&((relativeData.get(index)) > tempRelData)) {
+				try {
+
+					relativeData.set(index+1,relativeData.get(index));
+					Bars.set(index+1, Bars.get(index));
+//					Bars.get(index).highlight();
+//					Bars.get(index+1).highlight();
+					index--;
+					repaint();
+//					update(this.getComponentGraphics(getGraphics()));
+					Bars.get(index).unhighlight();
+					Bars.get(index+1).unhighlight();
+					Thread.sleep(time);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+    		}
+//        	Main.say("The size of the Bars is "+ arrayLength+" at j "+j+ " the data at index 11 is "+ relativeData.get(11));
+
+    		Bars.set(index+1, tempBar);
+    		relativeData.set(index+1, tempRelData);
+    		
+    	}
     }
     
     

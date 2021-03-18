@@ -95,7 +95,7 @@ public class Main extends JFrame {
         JMenu fileMenu = new JMenu("Sorting Algorithms");
         JMenuItem item1 = new JMenuItem("Heap Sort");
         JMenuItem item2 = new JMenuItem("Bubble Sort");
-        JMenuItem item3 = new JMenuItem("Quick Sort");
+        JMenuItem item3 = new JMenuItem("Insertion Sort");
         JMenuItem item4 = new JMenuItem("Sort");
         JMenuItem item5 = new JMenuItem("Sort");
         JMenuItem item6 = new JMenuItem("Sort");
@@ -140,13 +140,13 @@ public class Main extends JFrame {
             }
         });
         
-        //# Students per area
+        //# Insertion Sort
         item3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	mainPanel.clearMap();
+//            	mainPanel.clearMap();
                 System.out.println("Just clicked menu item 3");
-//                mainPanel.setData(sqlData);
+                mainPanel.insertionSort();
             }
         });
         
