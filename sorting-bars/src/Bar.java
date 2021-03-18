@@ -28,10 +28,17 @@ public class Bar {
 		g.fillRect(x,y, (int)barWidth,(int)barHeight);
 		
 	}
-	
+	public void highlight() {
+		state = State.HIGHLIGHTED;
+	}
+	public void unhighlight() {
+		state = State.NORMAL;
+	}
 	public String getLabel() {
 		return label;
 	}
+	
+	
 	public int getValue() {
 		return (int)val;
 	}

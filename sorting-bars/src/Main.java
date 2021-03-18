@@ -131,8 +131,8 @@ public class Main extends JFrame {
 //            	mainPanel.clearMap();
 //            	getData(filename);
 //            	mainPanel.setData(nums);
-//            	new Timer(1000).start();
             	mainPanel.bubbleSort();
+//            	repaint();
 
                 
 //                mainPanel.setData(sqlData);

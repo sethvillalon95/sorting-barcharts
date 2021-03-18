@@ -24,6 +24,7 @@ public class Vis extends JPanel {
     
     double max_num;
     boolean isBar = true;
+	private boolean debugger = false;
 
 
     public Vis() {
@@ -42,9 +43,13 @@ public class Vis extends JPanel {
 
 	public void clearMap() {
 //		System.out.println("clearMap ran");
-//		System.out.println("data.clear() is  "+ relativeData.isEmpty());
-		if(!relativeData.isEmpty() && !data.isEmpty()) {
+//		System.out.println("data   is  "+ relativeData.isEmpty());
+		if(!relativeData.isEmpty()) {
 			relativeData.clear();
+		}
+		
+		if(!data.isEmpty()) {
+			data.clear();
 		}
 		
 
@@ -127,8 +132,13 @@ public class Vis extends JPanel {
             if(ratio ==1) {
             	largestHeight = y;
             }
+            
+            if(debugger ) {
+            	debug1();
+            	debugger = false;
+            }
             bar.draw(g,x, y, barHeight,barWidth);
-            Main.say("drawing "+i);
+//            Main.say("drawing "+i);
             x+=barWidth+5;
 //            x+=barWidthhowManyBars;
         	i++;
@@ -144,25 +154,55 @@ public class Vis extends JPanel {
                 int b = Bars.get(j-1).getValue();
                 if(a<b){
                 	Bar tempBar = Bars.get(j);
-                	double relRatio = relativeData.get(j);
-                	relativeData.set(j, relativeData.get(j-1));
-                	relativeData.set(j-1, relRatio);
+                	// delay using thread
+                	try {
+	                	double relRatio = relativeData.get(j);
+	                	relativeData.set(j, relativeData.get(j-1));
+	                	relativeData.set(j-1, relRatio);
+	                	Bars.get(j-1).highlight();
+	                	Bars.get(j).highlight();
+	                	Bars.set(j, Bars.get(j-1));
+	                	Bars.set(j-1, tempBar);
+//	                    Collections.swap(Bars, j-1, j);
+	                    // THREAD SLEEP
+	                	debugger = true;
+		                repaint();
+		                update(this.getComponentGraphics(getGraphics()));
+	                	Bars.get(j-1).unhighlight();
+	                	Bars.get(j).unhighlight();
+	                    Main.say("switches after repaint");
+	                    debug(); 
+	                    
+						Thread.sleep(1000);
 
-                	Bars.set(j, Bars.get(j-1));
-                	Bars.set(j-1, tempBar);
-//                    Collections.swap(Bars, j-1, j);
-                    
-                    Main.say("switches");
-                    repaint();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+
+                    // delay here
                 }
             }
         }
-    	Main.say("This is after bubble sort");
-    	for(var bar: Bars) {
-    		Main.say(bar.getValue());
-    	}
+//    	Main.say("This is after bubble sort");
+//    	for(var bar: Bars) {
+//    		Main.say(bar.getValue());
+//    	}
     }
+    
+    
         
+    private void debug() {
+    	for(var v:Bars) {
+    		Main.say("Printing the value"+v.getValue());
+    	}
+    	Main.say("");
+    }
+    
+    private void debug1() {
+    	Main.say(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    }
 
 
 }
