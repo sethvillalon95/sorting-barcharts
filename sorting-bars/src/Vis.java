@@ -25,7 +25,7 @@ public class Vis extends JPanel {
     double max_num;
     boolean isBar = true;
 	private boolean debugger = false;
-	int time = 100;
+	int time = 1000;
 
 
     public Vis() {
@@ -209,11 +209,11 @@ public class Vis extends JPanel {
 
 					relativeData.set(index+1,relativeData.get(index));
 					Bars.set(index+1, Bars.get(index));
-//					Bars.get(index).highlight();
-//					Bars.get(index+1).highlight();
+					Bars.get(index).highlight();
+					Bars.get(index+1).highlight();
 					index--;
 					repaint();
-//					update(this.getComponentGraphics(getGraphics()));
+					update(this.getComponentGraphics(getGraphics()));
 					Bars.get(index).unhighlight();
 					Bars.get(index+1).unhighlight();
 					Thread.sleep(time);
