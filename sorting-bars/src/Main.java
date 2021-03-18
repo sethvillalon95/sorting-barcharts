@@ -93,7 +93,7 @@ public class Main extends JFrame {
         //instantiate menubar, menus, and menu options
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Sorting Algorithms");
-        JMenuItem item1 = new JMenuItem("Heap Sort");
+        JMenuItem item1 = new JMenuItem("Selection Sort");
         JMenuItem item2 = new JMenuItem("Bubble Sort");
         JMenuItem item3 = new JMenuItem("Insertion Sort");
         JMenuItem item4 = new JMenuItem("Sort");
@@ -110,15 +110,14 @@ public class Main extends JFrame {
 
 
 
-        //setup action listeners
+        //Selection Sort
         item1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Just clicked menu item 1");
                 System.out.println("Just clicked menu item 2");
-            	mainPanel.clearMap();
-            	
-            	
+//            	mainPanel.clearMap();
+            	mainPanel.selectionSort();
 
             }
         });
