@@ -97,7 +97,7 @@ public class Main extends JFrame {
         JMenuItem item1 = new JMenuItem("Selection Sort");
         JMenuItem item2 = new JMenuItem("Bubble Sort");
         JMenuItem item3 = new JMenuItem("Insertion Sort");
-        JMenuItem item4 = new JMenuItem("Sort");
+        JMenuItem item4 = new JMenuItem("Gnome Sort");
         JMenuItem item5 = new JMenuItem("Sort");
         JMenuItem item6 = new JMenuItem("Sort");
         JMenuItem item7 = new JMenuItem("Sort");
@@ -117,16 +117,13 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Just clicked menu item 1");
                 System.out.println("Just clicked menu item 2");
-//            	mainPanel.clearMap();
-//            	mainPanel.selectionSort();
-            	
                 if(!nums.isEmpty()) {
                 	nums.clear();
                 }
             	mainPanel.clearMap();
-            	getData("test1.txt");
+            	getData(filename);
             	mainPanel.setData(nums);
-//            	mainPanel.bubbleSort();
+            	mainPanel.bubbleSort();
             	repaint();
 
             }
@@ -158,19 +155,30 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
 //            	mainPanel.clearMap();
                 System.out.println("Just clicked menu item 3");
+                if(!nums.isEmpty()) {
+                	nums.clear();
+                }
+            	mainPanel.clearMap();
+            	getData(filename);
+            	mainPanel.setData(nums);
                 mainPanel.insertionSort();
+            	repaint();
             }
         });
         
         
-        //AVG GPA per Major
+        //Gnome sort
         item4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!nums.isEmpty()) {
+                	nums.clear();
+                }
             	mainPanel.clearMap();
-                System.out.println("*******************Just clicked menu item 4***************");
-//                mainPanel.setData(sqlData);
-
+            	getData(filename);
+            	mainPanel.setData(nums);
+                mainPanel.gnomeSort();
+            	repaint();
 
             }
         });

@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 
 
+
 public class Vis extends JPanel {
 
     private String textToDisplay;
@@ -25,7 +26,7 @@ public class Vis extends JPanel {
     double max_num;
     boolean isBar = true;
 	private boolean debugger = false;
-	int time = 1;
+	int time = 100;
 
 
     public Vis() {
@@ -270,6 +271,48 @@ public class Vis extends JPanel {
 			if(i==(n-2)) {
 				Bars.get(i+1).unhighlight();
 			}
+    	}
+    }
+    
+    public void gnomeSort() {
+    	int index = 0;
+    	while(index<Bars.size()) {
+    		if(index==0) {
+    			index++;
+    		}
+    		int firstBar = Bars.get(index).getValue();
+    		int secondBar = Bars.get(index-1).getValue();
+    		double firstRel = relativeData.get(index);
+    		double secondRel = relativeData.get(index-1);
+    		
+    		
+    		if((firstBar>=secondBar)&&(firstRel>=secondRel)) {
+    			index++;
+    		}else {
+				try {
+					Bar tempBar = Bars.get(index);
+					double tempRelData = relativeData.get(index);
+					Bars.set(index, Bars.get(index-1));
+					tempBar.highlight();
+					Bars.get(index-1).highlight();
+					repaint();
+					update(this.getComponentGraphics(getGraphics()));
+					tempBar.unhighlight();
+					Bars.get(index-1).unhighlight();
+					relativeData.set(index, relativeData.get(index-1));
+					Bars.set(index-1, tempBar);
+					relativeData.set(index-1, tempRelData);
+
+
+					Thread.sleep(time);
+					
+					index--;
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
+			}
+    		
     	}
     }
     
