@@ -230,29 +230,36 @@ public class Vis extends JPanel {
     			if((Bars.get(j).getValue()<Bars.get(min_idx).getValue())&&(relativeData.get(j)<relativeData.get(min_idx))) {
     				min_idx=j;
     			}
-    			//Swap
-    			try {
-        			Bar tempBar = Bars.get(min_idx);
-        			double tempRelData = relativeData.get(min_idx);
-        			Bars.set(min_idx, Bars.get(i));
-        			relativeData.set(min_idx, relativeData.get(i));
-        			Bars.get(i).highlight();
-        			Bars.set(i, tempBar);
-        			relativeData.set(i, tempRelData);
-        			tempBar.highlight();
-    				repaint();
-    				update(this.getComponentGraphics(getGraphics()));
-        			Bars.get(i).unhighlight();
-        			tempBar.unhighlight();
-    				Thread.sleep(time);
-    			}catch(Exception e) {
-    				
-    			}
 
-
-
-    			
     		}
+    		
+			//Swap
+			try {
+    			Bar tempBar = Bars.get(min_idx);
+    			double tempRelData = relativeData.get(min_idx);
+    			
+    			Bars.set(min_idx, Bars.get(i));
+    			relativeData.set(min_idx, relativeData.get(i));
+    			
+    			Bars.get(i).highlight();
+    			
+    			Bars.set(i, tempBar);
+    			relativeData.set(i, tempRelData);
+    			
+    			tempBar.highlight();
+    			Bars.get(i).unhighlight();
+    			tempBar.unhighlight();
+				repaint();
+				update(this.getComponentGraphics(getGraphics()));
+
+				Thread.sleep(time);
+			}catch(Exception e) {
+				
+			}
+			
+			if(i==(n-2)) {
+				Bars.get(i+1).unhighlight();
+			}
     	}
     }
     

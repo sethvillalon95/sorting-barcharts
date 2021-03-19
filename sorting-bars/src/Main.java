@@ -16,7 +16,7 @@ import javax.swing.JMenuItem;
 public class Main extends JFrame {
 
     private Vis mainPanel;
-    String filename = "test.txt";
+    String filename = "test1.txt";
     ArrayList<Double> nums;
 
     public Main() {
