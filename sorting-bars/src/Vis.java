@@ -47,10 +47,17 @@ public class Vis extends JPanel {
 //		System.out.println("data   is  "+ relativeData.isEmpty());
 		if(!relativeData.isEmpty()) {
 			relativeData.clear();
+			Main.say("Relative data is cleared: "+ relativeData.isEmpty());
 		}
 		
 		if(!data.isEmpty()) {
 			data.clear();
+			Main.say("Relative data is cleared: "+ data.isEmpty());
+
+		}
+		
+		if(!Bars.isEmpty()) {
+			Bars.clear();
 		}
 		
 
@@ -109,41 +116,44 @@ public class Vis extends JPanel {
         x = (int)(w*.09);
 
         
-        int i = 0;
 //        Main.say(Bars.isEmpty());
-        for(var bar :Bars) {
-        	barWidth= (w/howManyBars)/2;
-        	ratio = relativeData.get(i);
-        	barHeight = (int)(h*ratio*.90);
-        	String barLabel = bar.getLabel();
-            g.setColor(Color.black);
-            yLabel = (int)(h*.98);
-            g.drawString(barLabel, x+5, yLabel);
-            xLine =(int)(w*.05);
-            yLine =(int)(h*.96);
-            
-            // vertical line;
-            g.drawLine(xLine, 0, xLine, yLine);
-            //horizontal line; 
-            g.drawLine(xLine,yLine,w,yLine);
-            
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< need to change color later >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>            
-            g.setColor(Color.BLUE);
-            y =(int) ((h*.95)-barHeight);
-            if(ratio ==1) {
-            	largestHeight = y;
-            }
-            
-            if(debugger ) {
-            	debug1();
-            	debugger = false;
-            }
-            bar.draw(g,x, y, barHeight,barWidth);
-//            Main.say("drawing "+i);
-            x+=barWidth+5;
-//            x+=barWidthhowManyBars;
-        	i++;
+        if(!Bars.isEmpty() && !relativeData.isEmpty()) {
+            int i = 0;
+        	 for(var bar :Bars) {
+             	barWidth= (w/howManyBars)/2;
+             	ratio = relativeData.get(i);
+             	barHeight = (int)(h*ratio*.90);
+             	String barLabel = bar.getLabel();
+                 g.setColor(Color.black);
+                 yLabel = (int)(h*.98);
+                 g.drawString(barLabel, x+5, yLabel);
+                 xLine =(int)(w*.05);
+                 yLine =(int)(h*.96);
+                 
+                 // vertical line;
+                 g.drawLine(xLine, 0, xLine, yLine);
+                 //horizontal line; 
+                 g.drawLine(xLine,yLine,w,yLine);
+                 
+     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< need to change color later >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>            
+                 g.setColor(Color.BLUE);
+                 y =(int) ((h*.95)-barHeight);
+                 if(ratio ==1) {
+                 	largestHeight = y;
+                 }
+                 
+                 if(debugger ) {
+                 	debug1();
+                 	debugger = false;
+                 }
+                 bar.draw(g,x, y, barHeight,barWidth);
+//                 Main.say("drawing "+i);
+                 x+=barWidth+5;
+//                 x+=barWidthhowManyBars;
+             	i++;
+             }
         }
+       
 
     }
     

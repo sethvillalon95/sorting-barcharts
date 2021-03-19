@@ -16,7 +16,7 @@ import javax.swing.JMenuItem;
 public class Main extends JFrame {
 
     private Vis mainPanel;
-    String filename = "test1.txt";
+    String filename = "test.txt";
     ArrayList<Double> nums;
 
     public Main() {
@@ -31,8 +31,10 @@ public class Main extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Seth's Data Visualization");
         setVisible(true);
-        getData(filename);
-        mainPanel.setData(nums);
+        nums = new ArrayList<>();
+
+//        getData(filename);
+//        mainPanel.setData(nums);
     }
     
     private void getData(String fname) {
@@ -40,7 +42,6 @@ public class Main extends JFrame {
 
             File f = new File(fname);
             Scanner s = new Scanner(f);
-            nums = new ArrayList<>();
             if(!nums.isEmpty()) {
             	nums.clear();
             }
@@ -117,7 +118,16 @@ public class Main extends JFrame {
                 System.out.println("Just clicked menu item 1");
                 System.out.println("Just clicked menu item 2");
 //            	mainPanel.clearMap();
-            	mainPanel.selectionSort();
+//            	mainPanel.selectionSort();
+            	
+                if(!nums.isEmpty()) {
+                	nums.clear();
+                }
+            	mainPanel.clearMap();
+            	getData("test1.txt");
+            	mainPanel.setData(nums);
+//            	mainPanel.bubbleSort();
+            	repaint();
 
             }
         });
@@ -127,11 +137,14 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Just clicked menu item 2");
-//            	mainPanel.clearMap();
-//            	getData(filename);
-//            	mainPanel.setData(nums);
+                if(!nums.isEmpty()) {
+                	nums.clear();
+                }
+            	mainPanel.clearMap();
+            	getData(filename);
+            	mainPanel.setData(nums);
             	mainPanel.bubbleSort();
-//            	repaint();
+            	repaint();
 
                 
 //                mainPanel.setData(sqlData);
