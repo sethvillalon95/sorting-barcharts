@@ -315,7 +315,74 @@ public class Vis extends JPanel {
     		
     	}
     }
-    
+
+    public void cockTailSort() {
+    	boolean swapped = true;
+    	int start = 0;
+    	int end = Bars.size();
+    	
+    	while(swapped==true) {
+    		swapped = false;
+    		for(int i = start; i<end-1; i++) {
+    			int firstBarv = Bars.get(i).getValue();
+    			int secondBarv = Bars.get(i+1).getValue();
+    			double firstRel = relativeData.get(i);
+    			double secondRel = relativeData.get(i+1);
+    			if((firstBarv>secondBarv)&&(firstRel>secondRel)) {
+    				Bar tempBar = Bars.get(i);
+    				double tempRel = firstRel;
+    				Bars.set(i,Bars.get(i+1));
+    				Bars.get(i+1).highlight();
+    				tempBar.highlight();
+    				// update here
+    				repaint();
+					update(this.getComponentGraphics(getGraphics()));
+    				Bars.get(i+1).unhighlight();
+    				tempBar.unhighlight();
+
+    				relativeData.set(i, relativeData.get(i+1));
+    				Bars.set(i+1, tempBar);
+    				relativeData.set(i+1, tempRel);
+    				swapped = true;
+    			}
+    			
+    		}
+    		
+    		if(!swapped) {
+    			break;
+    		}
+    		swapped=false;
+    		end--;
+    		for(int i =end-1; i>=start;i--) {
+    			int firstBarv = Bars.get(i).getValue();
+    			int secondBarv = Bars.get(i+1).getValue();
+    			double firstRel = relativeData.get(i);
+    			double secondRel = relativeData.get(i+1);
+    			if((firstBarv>secondBarv)&&(firstRel>secondRel)) {
+    				Bar tempBar = Bars.get(i);
+    				double tempRel = firstRel;
+    				Bars.set(i,Bars.get(i+1));
+    				Bars.get(i+1).highlight();
+    				// update here
+    				repaint();
+					update(this.getComponentGraphics(getGraphics()));
+    				Bars.get(i+1).unhighlight();
+    				tempBar.unhighlight();
+    				relativeData.set(i, relativeData.get(i+1));
+    				Bars.set(i+1, tempBar);
+    				relativeData.set(i+1, tempRel);
+    				swapped = true;
+    			}
+    		}
+    		start++;
+    		
+    		try {
+				Thread.sleep(time);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+    	}
+    }
     
         
     private void debug() {

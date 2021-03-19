@@ -98,7 +98,7 @@ public class Main extends JFrame {
         JMenuItem item2 = new JMenuItem("Bubble Sort");
         JMenuItem item3 = new JMenuItem("Insertion Sort");
         JMenuItem item4 = new JMenuItem("Gnome Sort");
-        JMenuItem item5 = new JMenuItem("Sort");
+        JMenuItem item5 = new JMenuItem("Cocktail Sort");
         JMenuItem item6 = new JMenuItem("Sort");
         JMenuItem item7 = new JMenuItem("Sort");
         
@@ -187,11 +187,16 @@ public class Main extends JFrame {
         item5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!nums.isEmpty()) {
+                	nums.clear();
+                }
             	mainPanel.clearMap();
+            	getData(filename);
+            	mainPanel.setData(nums);
+                mainPanel.cockTailSort();
+            	repaint();
 
-                System.out.println("Just clicked menu item 5");
-//                mainPanel.setData(sqlData);
-
+            
             }
         });
         
