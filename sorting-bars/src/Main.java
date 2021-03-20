@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -99,12 +100,15 @@ public class Main extends JFrame {
         JMenuItem item3 = new JMenuItem("Insertion Sort");
         JMenuItem item4 = new JMenuItem("Gnome Sort");
         JMenuItem item5 = new JMenuItem("Cocktail Sort");
-        JMenuItem item6 = new JMenuItem("Sort");
+        JMenuItem item6 = new JMenuItem("Bogo Sort");
         JMenuItem item7 = new JMenuItem("Sort");
         
-        JMenu chartMenu = new JMenu("Chart Type");
-        JMenuItem bar = new JMenuItem("Bar Chart");
-        JMenuItem lineChart = new JMenuItem("Line Chart");
+        JMenu file_chooser = new JMenu("File");
+        JMenuItem chooser_file = new JMenuItem("Choose File");
+        JMenuItem slow = new JMenuItem("Slow");
+        JMenuItem fast = new JMenuItem("Fast");
+
+
 
 
 
@@ -183,7 +187,7 @@ public class Main extends JFrame {
             }
         });
         
-        //AVG credits per year
+        //Cock tail sort
         item5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -201,20 +205,26 @@ public class Main extends JFrame {
         });
         
         
-        //# Students per GPA
+        //Bogo Sort 
         item6.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!nums.isEmpty()) {
+                	nums.clear();
+                }
             	mainPanel.clearMap();
+            	getData(filename);
+            	mainPanel.setData(nums);
+                mainPanel.bogoSort();
+            	repaint();
 
-                System.out.println("Just clicked menu item 6");
 //                mainPanel.setData(sqlData);
 
             }
         });
         
         
-        //# Students per GPA
+        //
         item7.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -227,22 +237,45 @@ public class Main extends JFrame {
         });
         
         // toggle to bar charts 
-        bar.addActionListener(new ActionListener() {
+        chooser_file.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	mainPanel.isBar=true;
+            	JFileChooser chooser = new JFileChooser();
+                chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+                // show open dialog method
+                chooser.showDialog(mainPanel,"Open");
+                File tf = chooser.getSelectedFile();
+                filename = tf.getAbsolutePath();
+                if(!nums.isEmpty()) {
+                	nums.clear();
+                }
+            	mainPanel.clearMap();
+            	getData(filename);
+            	mainPanel.setData(nums);
             	repaint();
             }
         });
         
-        lineChart.addActionListener(new ActionListener() {
+        slow.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	mainPanel.isBar=false;
-            	repaint();
+            	mainPanel.time = 100;
             }
         });
+        
+        fast.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	mainPanel.time = 0;
+            }
+        });
+        
+
         //now hook them all together
+        file_chooser.add(chooser_file);
+        file_chooser.add(slow);
+        file_chooser.add(fast);
+
         fileMenu.add(item1);
         fileMenu.add(item2);
         fileMenu.add(item3);
@@ -251,12 +284,10 @@ public class Main extends JFrame {
         fileMenu.add(item6);
         fileMenu.add(item7);
         
-        chartMenu.add(bar);
-        chartMenu.add(lineChart);
 
+        menuBar.add(file_chooser);
 
         menuBar.add(fileMenu);
-        menuBar.add(chartMenu);
 
         return menuBar;
     }

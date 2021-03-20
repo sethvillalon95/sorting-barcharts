@@ -384,8 +384,64 @@ public class Vis extends JPanel {
     	}
     }
     
+    public void bogoSort() {
+    	int i = 0;
+    	Main.say(isSorted());
+    	while(isSorted()==false) {
+    		shuffle();
+//    		Main.say("running "+ i);
+//    		if(i==7000) {
+//    			break;
+    		
+    		
+//    		}
+    		
+    		repaint();
+			update(this.getComponentGraphics(getGraphics()));
+    		i++;
+    	}
+		
+	}
         
-    private void debug() {
+    private void shuffle() {
+		// TODO Auto-generated method stub
+    	for(int i =0; i<Bars.size(); i++) {
+    		swap(i,(int)(Math.random()*i));
+//    		Main.say("shuffling");
+    	}
+		
+	}
+
+	private void swap(int i, int j) {
+		// TODO Auto-generated method stub
+		Bar tempBar = Bars.get(i);
+		double tempRel =relativeData.get(i);
+		
+		Bars.set(i, Bars.get(j));
+		relativeData.set(i, relativeData.get(j));
+		
+		Bars.set(j, tempBar);
+		relativeData.set(j, tempRel);
+		
+		repaint();
+	}
+
+	private boolean isSorted() {
+		// TODO Auto-generated method stu
+		for(int i=1; i<Bars.size();i++) {
+			int firstBarV = Bars.get(i).getValue();
+			int secondBarV = Bars.get(i-1).getValue();
+			double firstRel = relativeData.get(i);
+			double secondRel = relativeData.get(i-1);
+			
+			if((firstBarV<secondBarV)&&(firstRel<secondRel)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private void debug() {
     	for(var v:Bars) {
     		Main.say("Printing the value"+v.getValue());
     	}
