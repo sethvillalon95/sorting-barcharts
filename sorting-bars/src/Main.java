@@ -259,7 +259,7 @@ public class Main extends JFrame {
         slow.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	mainPanel.time = 100;
+            	mainPanel.time = 200;
             }
         });
         
